@@ -32,36 +32,37 @@ class S3:
 
         base_path = os.environ['GITHUB_WORKSPACE']
         print('\nBase path {base_path}'.format(base_path=base_path))
-        for root, dirs, files in os.walk(base_path, topdown=False):
+        fullSourceSuffix = source['prefix'] + source['suffix'];
+        print('\n'fullSourceSuffix {fullSourceSuffix}'.format(fullSourceSuffix=fullSourceSuffix))
+        for root, dirs, files in os.walk(base_path, topdown=False)
             for name in files:
                 source_filename = os.path.join(root, name)
 
                 filename = source_filename[len(base_path):]
                 print('\nProcessing: {filename}'.format(filename=filename))
 
-                if not source['suffix'] or filename.endswith(source['suffix']):
-                    if not source['prefix'] or filename.startswith(source['prefix']):
-                        destination_filename = '{prefix}{source_filename}{suffix}{timestamp}'.format(
-                            prefix=destination['prefix'],
-                            source_filename=os.path.basename(filename),
-                            suffix=destination['suffix'],
-                            timestamp=timestamp
-                        )
+                if filename.endswith(fullSourceSuffix):
+                    destination_filename = '{prefix}{source_filename}{suffix}{timestamp}'.format(
+                        prefix=destination['prefix'],
+                        source_filename=os.path.basename(filename),
+                        suffix=destination['suffix'],
+                        timestamp=timestamp
+                    )
 
-                        while '//' in destination_filename:
-                            destination_filename = destination_filename.replace('//', '/')
+                    while '//' in destination_filename:
+                        destination_filename = destination_filename.replace('//', '/')
 
-                        # Display logging messages
-                        print('\nUploading: {source_filename}'.format(source_filename=source_filename))
-                        print('Destination Bucket: {bucket}'.format(bucket=destination['bucket']))
-                        print('Destination Filename: {destination_filename}'.format(destination_filename=destination_filename))
+                    # Display logging messages
+                    print('\nUploading: {source_filename}'.format(source_filename=source_filename))
+                    print('Destination Bucket: {bucket}'.format(bucket=destination['bucket']))
+                    print('Destination Filename: {destination_filename}'.format(destination_filename=destination_filename))
 
-                        # Upload the new file
-                        S3.__client__().upload_file(
-                            Bucket=destination['bucket'],
-                            Filename=source_filename,
-                            Key=destination_filename
-                        )
+                    # Upload the new file
+                    S3.__client__().upload_file(
+                        Bucket=destination['bucket'],
+                        Filename=source_filename,
+                        Key=destination_filename
+                    )
 
         print('Upload Complete')
 
