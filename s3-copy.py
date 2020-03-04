@@ -36,7 +36,8 @@ class S3:
         fullSourceSuffix = source['prefix'] + source['suffix']
         
         print('\nfullSourceSuffix {fullSourceSuffix}'.format(fullSourceSuffix=fullSourceSuffix))
-        for root, dirs, files in os.walk(base_path, topdown=False)
+        
+        for root, dirs, files in os.walk(base_path, topdown=False):
             for name in files:
                 source_filename = os.path.join(root, name)
 
