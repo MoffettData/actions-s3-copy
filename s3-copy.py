@@ -32,8 +32,10 @@ class S3:
 
         base_path = os.environ['GITHUB_WORKSPACE']
         print('\nBase path {base_path}'.format(base_path=base_path))
-        fullSourceSuffix = source['prefix'] + source['suffix'];
-        print('\n'fullSourceSuffix {fullSourceSuffix}'.format(fullSourceSuffix=fullSourceSuffix))
+        
+        fullSourceSuffix = source['prefix'] + source['suffix']
+        
+        print('\nfullSourceSuffix {fullSourceSuffix}'.format(fullSourceSuffix=fullSourceSuffix))
         for root, dirs, files in os.walk(base_path, topdown=False)
             for name in files:
                 source_filename = os.path.join(root, name)
