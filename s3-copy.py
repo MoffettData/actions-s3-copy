@@ -31,9 +31,12 @@ class S3:
             timestamp = '.{timestamp}'.format(timestamp=datetime.utcnow().timestamp())
 
         base_path = os.environ['GITHUB_WORKSPACE']
+        print('\nBase path {base_path}'.format(base_path=base_path))
         for root, dirs, files in os.walk(base_path, topdown=False):
             for name in files:
                 source_filename = os.path.join(root, name)
+                print('\nProcessing: {source_filename}'.format(source_filename=source_filename))
+
                 filename = source_filename[len(base_path):]
                 if not source['suffix'] or filename.endswith(source['suffix']):
                     if not source['prefix'] or filename.startswith(source['prefix']):
